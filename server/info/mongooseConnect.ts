@@ -1,0 +1,1 @@
+export const mongooseUrl: string = "mongodb+srv://akshatarora0013:Ravi123Sapna@courseselling.9ueqmee.mongodb.net/"
