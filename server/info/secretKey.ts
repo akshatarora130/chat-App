@@ -1,0 +1,1 @@
+export const SECRETKEY: string = "VARNIKA_130";

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // interface IChat extends Document {
 //     chatName: string;
 //     isGroupChat: boolean;
-//     users: mongoose.Types.ObjectId[];
+//     user: mongoose.Types.ObjectId[];
 //     latest: mongoose.Types.ObjectId[];
 //     groupAdmin: mongoose.Types.ObjectId[];
 // }
@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     {
 //         chatName: { type: String, trim: true },
 //         isGroupChat: { type: Boolean, default: false },
-//         users: [
+//         user: [
 //             {
 //                 type: mongoose.Schema.Types.ObjectId,
 //                 ref: User,
