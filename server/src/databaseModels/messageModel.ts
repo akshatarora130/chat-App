@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface IMessage extends Document {
+export interface IMessage extends Document {
     sender: mongoose.Types.ObjectId;
     content: string;
     chat: mongoose.Types.ObjectId;
