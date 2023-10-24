@@ -17,10 +17,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/", userSignupRoute);        //       /user/signup
-app.use("/", userLoginRoute);         //       /user/login
-app.use("/", searchedUsers);          //       /user/searchedUsers
-app.use("/", createChat);             //       /chat/createChat
+app.use("/user", userSignupRoute);        //       /user/signup
+app.use("/user", userLoginRoute);         //       /user/login
+app.use("/user", searchedUsers);          //       /user/searchedUsers
+app.use("/chat", createChat);             //       /chat/createChat
 
 app.listen(port, () => {
     console.log(`app running on port number ${port}`);

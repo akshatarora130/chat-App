@@ -5,7 +5,7 @@ import { User } from "../../databaseModels/userModel";
 
 const router: Router = express.Router();
 
-router.post("/chat/createChat", authenticateJWT, async (req: Request, res: Response) => {
+router.post("/createChat", authenticateJWT, async (req: Request, res: Response) => {
     try {
         const { userId } = req.body;
 

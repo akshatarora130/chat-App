@@ -11,7 +11,7 @@ const loginSchema = z.object({
     password: z.string().min(6).max(20)
 })
 
-router.post("/user/login", async (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
     const parsedInput = loginSchema.safeParse(req.body);
     if(!parsedInput.success){
         return res.status(411).json({
