@@ -1,13 +1,17 @@
 import jwt from 'jsonwebtoken';
 import { SECRETKEY } from '../info/secretKey';
 import { User, IUser } from '../databaseModels/userModel';
-import { Model } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
+import {Types} from "mongoose";
+
+export interface updatedIUser extends IUser{
+    _id: Types.ObjectId;
+}
 
 declare global {
     namespace Express {
         interface Request {
-            user: Model<IUser> | null;
+            user: updatedIUser| null;
         }
     }
 }
@@ -27,7 +31,7 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
             }
 
             try {
-                const userModel: Model<IUser> | null = await User.findOne({ email: user.email });
+                const userModel: updatedIUser | null = await User.findOne({ email: user.email });
                 console.log(userModel);
                 if (userModel) {
                     req.user = userModel;
