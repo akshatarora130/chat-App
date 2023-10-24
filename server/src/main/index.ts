@@ -20,6 +20,7 @@ app.use("/", userSignupRoute);        //       /user/signup
 app.use("/", userLoginRoute);         //       /user/login
 app.use("/", searchedUsers);          //       /user/searchedUsers
 
+
 app.listen(port, () => {
     console.log(`app running on port number ${port}`);
 })

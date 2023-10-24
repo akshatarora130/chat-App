@@ -1,11 +1,25 @@
 import express, { Router, Response, RequestHandler } from "express";
 import { authenticateJWT } from "../../middlewares/authenticateJWT";
 import { User } from "../../databaseModels/userModel";
+import {z} from "zod"
 
 const router: Router = express.Router();
 
+const searchedUserInput = z.object({
+    search : z.string().min(1).max(10),
+})
+
 router.get("/user/searchedUsers", authenticateJWT, async (req, res) => {
-    const keyword = String(req.query.search);
+    const inputData = searchedUserInput.safeParse(req.query);
+
+    if (!inputData.success) {
+        return res.status(400).json({
+            message: "Invalid input",
+            errors: inputData.error.issues,
+        });
+    }
+
+    const keyword = inputData.data.search;
 
     if (!keyword) {
         return res.status(401).json({
