@@ -5,6 +5,7 @@ import {port} from "../info/port"
 import userLoginRoute from "../routes/user/loginRoute";
 import userSignupRoute from "../routes/user/signupRoute"
 import searchedUsers from "../routes/user/searchedUsers";
+import createChat from "../routes/chats/createChat";
 import mongoose from "mongoose";
 import {mongooseUrl} from "../info/mongooseConnect";
 
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use("/", userSignupRoute);        //       /user/signup
 app.use("/", userLoginRoute);         //       /user/login
 app.use("/", searchedUsers);          //       /user/searchedUsers
-
+app.use("/", createChat);             //       /chat/createChat
 
 app.listen(port, () => {
     console.log(`app running on port number ${port}`);
