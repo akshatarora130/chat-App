@@ -2,10 +2,13 @@ import express from "express";
 import cors from "cors";
 
 import {port} from "../info/port"
-import userLoginRoute from "../routes/user/loginRoute";
-import userSignupRoute from "../routes/user/signupRoute"
+import userLogin from "../routes/user/loginRoute";
+import userSignup from "../routes/user/signupRoute"
 import searchedUsers from "../routes/user/searchedUsers";
 import createChat from "../routes/chats/createChat";
+import fetchChats from "../routes/chats/fetchChats";
+import sendMessage from "../routes/messages/sendMessage";
+import fetchMessages from "../routes/messages/fetchMessages";
 import mongoose from "mongoose";
 import {mongooseUrl} from "../info/mongooseConnect";
 
@@ -17,10 +20,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/user", userSignupRoute);        //       /user/signup
-app.use("/user", userLoginRoute);         //       /user/login
-app.use("/user", searchedUsers);          //       /user/searchedUsers
-app.use("/chat", createChat);             //       /chat/createChat
+app.use("/user", userSignup);              //       /user/signup
+app.use("/user", userLogin);               //       /user/login
+app.use("/user", searchedUsers);           //       /user/searchedUsers
+
+app.use("/chat", createChat);              //       /chat/createChat
+app.use("/chat", fetchChats);              //       /chat/fetchChats
+
+app.use("/message", sendMessage)           //       /message/sendMessage
+app.use("/message", fetchMessages)         //       /message/fetchMessages/:chatId
 
 app.listen(port, () => {
     console.log(`app running on port number ${port}`);
