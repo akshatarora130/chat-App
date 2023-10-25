@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 router.post("/createChat", authenticateJWT, async (req: Request, res: Response) => {
     try {
-        const { userId } = req.body;
+        const {userId}  = req.body;
 
         if (!userId) {
             return res.status(400).json({
@@ -19,7 +19,7 @@ router.post("/createChat", authenticateJWT, async (req: Request, res: Response) 
             isGroupChat: false,
             $and: [
                 { users: { $elemMatch: {$eq: req.user?._id } } },
-                { user: { $elemMatch: {$eq : userId } } },
+                { users: { $elemMatch: {$eq : userId } } },
             ],
         }).populate("users", "-password").populate("latest");
 
