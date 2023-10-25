@@ -32,7 +32,6 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
 
             try {
                 const userModel: updatedIUser | null = await User.findOne({ email: user.email });
-                console.log(userModel);
                 if (userModel) {
                     req.user = userModel;
                     next();
