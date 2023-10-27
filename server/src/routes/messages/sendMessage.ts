@@ -38,7 +38,7 @@ router.post("/sendMessage", authenticateJWT, async(req, res) => {
         await Chat.findByIdAndUpdate(chatId, {latest: newMessage})
 
         var populatedMessage: any = await Message.populate(savedMessage, [
-            { path: 'sender', select: 'name pic email' },
+            { path: 'sender', select: 'name profilePic email' },
             { path: 'chat' },
         ]);
 
