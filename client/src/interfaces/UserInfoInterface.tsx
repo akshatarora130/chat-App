@@ -3,7 +3,7 @@ export interface UserInfoInterface {
     name: string,
     email: string,
     password?: string,
-    profilePic: string,
+    profilePic: any,
     createdAt?: string,
     updatedAt?: string,
     __v?: number

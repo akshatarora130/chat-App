@@ -22,7 +22,7 @@ const ChatsPage = () => {
 
     const fetchChats = async () => {
         try {
-            const response = await axios.get(`${backendURL}/chat/fetchChats`, {
+            const response = await axios.get(`${backendURL}chat/fetchChats`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
