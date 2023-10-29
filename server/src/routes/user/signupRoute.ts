@@ -15,8 +15,7 @@ const signUpSchema = z.object({
 });
 
 router.post('/signup', async (req: Request, res: Response) => {
-    const body = JSON.parse(req.body);
-    const parsedInput = signUpSchema.safeParse(body);
+    const parsedInput = signUpSchema.safeParse(req.body);
     if (!parsedInput.success) {
         return res.status(422).json({
             error: parsedInput.error,
