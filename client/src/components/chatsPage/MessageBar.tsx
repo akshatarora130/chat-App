@@ -1,20 +1,30 @@
 import { Avatar, Box, IconButton, Typography, useTheme, Popover, Paper, List, ListItem, ListItemText } from "@mui/material";
-import { useRecoilValue } from "recoil";
-import { selectedUserInfo } from "../../atoms/selectedUserInfo.tsx";
+import {useRecoilState, useRecoilValue} from "recoil";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import PhoneIcon from '@mui/icons-material/Phone';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useState } from "react";
+import {selectedChatInfo} from "../../atoms/selectedChatInfo.tsx";
+import {loggedInUser} from "../../atoms/loggedInUser.tsx";
+import {UserInfoInterface} from "../../interfaces/UserInfoInterface.tsx";
 
 const MessageBar = () => {
     const theme = useTheme();
-    const selectedUser = useRecoilValue(selectedUserInfo);
+    const [selectedChat, setSelectedChat] = useRecoilState(selectedChatInfo);
+    const userInfo = useRecoilValue(loggedInUser);
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
 
-    const handleBack = () => {
+    const getSender = (loggedUser: UserInfoInterface | null, users: Array<UserInfoInterface> | undefined): UserInfoInterface | null => {
+        if(loggedUser === null || users === undefined){
+            return null;
+        }
+        return users[0]?._id === loggedUser?._id ? users[1] : users[0];
+    };
 
+    const handleBack = () => {
+        setSelectedChat(null)
     }
 
     const handleProfileBoxOpen = () => {
@@ -65,7 +75,7 @@ const MessageBar = () => {
                     <ArrowBackIcon/>
                 </IconButton>
                 <IconButton onClick={handleProfileBoxOpen}>
-                    <Avatar alt={selectedUser?.name} src={selectedUser?.profilePic} />
+                    <Avatar alt="" src="" />
                 </IconButton>
 
                 <Typography
@@ -76,7 +86,7 @@ const MessageBar = () => {
                         color: theme.palette.customColors.nameColor
                     }}
                 >
-                    {selectedUser?.name}
+                    {selectedChat?.isGroupChat ? selectedChat?.chatName : getSender(userInfo, selectedChat?.users)?.name}
                 </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>

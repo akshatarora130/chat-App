@@ -1,7 +1,7 @@
 import {atom} from "recoil";
-import {UserInfoInterface} from "../interfaces/UserInfoInterface.tsx";
+import {ChatInterface} from "../interfaces/ChatInterface.tsx";
 
-export const selectedUserInfo = atom<UserInfoInterface | null>({
-    key: "selectedUserInfo",
+export const selectedChatInfo = atom<ChatInterface | null>({
+    key: "selectedChatInfo",
     default: null
 })

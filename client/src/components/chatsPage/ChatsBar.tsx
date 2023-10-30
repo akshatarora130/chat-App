@@ -8,27 +8,42 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ChatIcon from "@mui/icons-material/Chat";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import NewChatDialog from "./NewChatDialog.tsx";
+import NewGroupDialog from "./NewGroupDialog.tsx";
 
 const ChatsBar = () => {
     const theme = useTheme();
     const [themeState, setThemeState] = useRecoilState(themesState);
+    // @ts-ignore
     const [userInfo, setUserInfo] = useRecoilState(loggedInUser);
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
+    const [isChatDialogOpen, setChatDialogOpen] = useState(false);
+    const [isGroupDialogOpen, setGroupDialogOpen] = useState(false);
+    const navigate = useNavigate();
 
     const toggleTheme = () => {
         setThemeState(themeState === "light" ? "dark" : "light");
     };
 
     const handleProfileBoxOpen = () => {
-        // Handle opening the user's profile here
+
     };
 
     const handleNewChat = () => {
-        // Handle initiating a new chat
+        setChatDialogOpen(true);
     };
 
     const handleNewGroup = () => {
-        // Handle creating a new group
+        setGroupDialogOpen(true);
+    };
+
+    const closeChatDialog = () => {
+        setChatDialogOpen(false);
+    };
+
+    const closeGroupDialog = () => {
+        setGroupDialogOpen(false);
     };
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,13 +55,14 @@ const ChatsBar = () => {
     };
 
     const handleSettings = () => {
-        // Handle settings
+
         handleMenuClose();
     };
 
     const handleLogout = () => {
-        setUserInfo(null);
+        localStorage.clear();
         handleMenuClose();
+        navigate("/login")
     };
 
     return (
@@ -78,6 +94,9 @@ const ChatsBar = () => {
                 <IconButton onClick={handleMenuOpen}>
                     <ExpandMoreIcon />
                 </IconButton>
+
+                <NewChatDialog open={isChatDialogOpen} onClose={closeChatDialog}  />
+                <NewGroupDialog open={isGroupDialogOpen} onClose={closeGroupDialog}  />
             </Box>
             <Popover
                 open={Boolean(menuAnchorEl)}

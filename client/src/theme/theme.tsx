@@ -16,6 +16,16 @@ interface CustomPalette extends PaletteOptions {
         signupContainer: string;
         linkLogin: string;
         linkSignup: string;
+        backgroundUserNewChat: string;
+        selectedBgUserNewChat: string;
+        colorNewChat: string;
+        chatsColor: string;
+        emojiIcon: string;
+        addIcon: string;
+        sendIcon: string;
+        senderMessage: string,
+        receiverMessage: string;
+        messageText: string;
     }
 }
 
@@ -39,6 +49,16 @@ const lightPalette: CustomPalette = {
         signupContainer: "#f0ebe3",
         linkLogin: "#000000",
         linkSignup: "#000000",
+        backgroundUserNewChat: "#f0f2f5",
+        selectedBgUserNewChat: "#d9fdd2",
+        colorNewChat: "#000000",
+        chatsColor: "#000000",
+        emojiIcon: "#000000",
+        addIcon: "#000000",
+        sendIcon: "#000000",
+        senderMessage: "#d9fdd2",
+        receiverMessage: "#ffffff",
+        messageText: "#000000"
     }
 };
 
@@ -62,6 +82,16 @@ const darkPalette: CustomPalette = {
         signupContainer: "#1f2c33",
         linkLogin: "#ffffff",
         linkSignup: "#ffffff",
+        backgroundUserNewChat: "#1f2c33",
+        selectedBgUserNewChat: "#015d4b",
+        colorNewChat: "#ffffff",
+        chatsColor: "#ffffff",
+        emojiIcon: "#ffffff",
+        addIcon: "#ffffff",
+        sendIcon: "#ffffff",
+        senderMessage: "#015d4b",
+        receiverMessage: "#1f2c33",
+        messageText: "#ffffff"
     }
 };
 
