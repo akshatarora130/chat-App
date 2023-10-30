@@ -15,6 +15,7 @@ import createGroup from "../routes/chats/createGroup";
 import renameGroup from "../routes/chats/renameGroup";
 import groupAdd from "../routes/chats/groupAdd";
 import groupRemove from "../routes/chats/groupRemove";
+import loggedInUserInfo from "../routes/user/loggedInUserInfo";
 
 
 mongoose.connect(mongooseUrl, {dbName: "chatApp"}).then(() => {
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use("/user", userSignup);              //       /user/signup
 app.use("/user", userLogin);               //       /user/login
 app.use("/user", searchedUsers);           //       /user/searchedUsers
+app.use("/user", loggedInUserInfo)         //       /user/userInfo
 
 app.use("/chat", createChat);              //       /chat/createChat
 app.use("/chat", fetchChats);              //       /chat/fetchChats
