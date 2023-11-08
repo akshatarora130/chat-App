@@ -17,6 +17,7 @@ import {loggedInUser} from "../../atoms/loggedInUser.tsx";
 import Messages from "./Messages.tsx";
 import SendMessage from "./SendMessage.tsx";
 import {messages} from "../../atoms/messages.tsx";
+import {io} from "socket.io-client";
 
 const ChatsPage = () => {
     const theme = useTheme();
@@ -27,6 +28,7 @@ const ChatsPage = () => {
     const [selectedChat, setSelectedChat] = useRecoilState(selectedChatInfo);
     // @ts-ignore
     const [allMessages, setAllMessages] = useRecoilState(messages);
+    const socket = io("http://localhost:3000/");
 
     const fetchUserInfo = async () => {
         try {
@@ -99,6 +101,9 @@ const ChatsPage = () => {
     useEffect(() => {
         fetchUserInfo();
         fetchChats();
+        socket.on("connect", () => {
+            console.log("log from client");
+        })
     }, []);
 
     useEffect(() => {

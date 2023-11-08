@@ -16,6 +16,7 @@ import renameGroup from "../routes/chats/renameGroup";
 import groupAdd from "../routes/chats/groupAdd";
 import groupRemove from "../routes/chats/groupRemove";
 import loggedInUserInfo from "../routes/user/loggedInUserInfo";
+import {Server} from "socket.io";
 
 
 mongoose.connect(mongooseUrl, {dbName: "chatApp"}).then(() => {
@@ -41,6 +42,17 @@ app.use("/chat", groupRemove)              //       /chat/groupRemove
 app.use("/message", sendMessage)           //       /message/sendMessage
 app.use("/message", fetchMessages)         //       /message/fetchMessages/:chatId
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`app running on port number ${port}`);
 })
+
+const io = new Server(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "http://localhost:5173",
+    },
+})
+
+io.on('connection', (socket) => {
+    console.log("Connected to socket.io");
+});

@@ -4,9 +4,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import {Button, InputAdornment, TextField} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import {useState} from "react";
 
-const NewGroupDialog = ({ open, onClose }) => {
+interface NewChatDialogProps {
+    open: boolean;
+    onClose: () => void;
+}
+
+const NewGroupDialog: React.FC<NewChatDialogProps> = ({ open, onClose }) => {
 
     const createGroup = () => {
 
