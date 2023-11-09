@@ -15,10 +15,11 @@ import {AccountCircle, Lock, Email} from "@mui/icons-material";
 import {useState} from "react";
 import lightModeBg from "../../Assets/Images/lightModeLoginBg.jpg";
 import darkModeBg from "../../Assets/Images/darkModeLogin.jpg";
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {themesState} from "../../atoms/themeState.tsx";
 import {backendURL} from "../../info/backendURL.tsx";
 import {useNavigate} from "react-router-dom";
+import {loggedInUser} from "../../atoms/loggedInUser.tsx";
 
 const Signup = () => {
     const theme = useTheme();
@@ -26,6 +27,8 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [profilePic, setProfilePic] = useState("");
+    // @ts-ignore
+    const [userInfo, setUserInfo] = useRecoilState(loggedInUser);
     const themeState = useRecoilValue(themesState);
     const navigate = useNavigate();
 
@@ -40,17 +43,15 @@ const Signup = () => {
             },
             body: JSON.stringify({ name: name, email: email, password: password, profilePic: profilePic }),
         })
-            .then((response) => {
+            .then(async (response) => {
                 if (response.ok) {
-                    return response.json().then((data) => {
-                        localStorage.setItem("token", data.token);
-                        navigate("/chats");
-                    });
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token);
+                    navigate("/chats");
                 } else {
-                    return response.json().then((errorData) => {
-                        console.error("Signup failed with error:", errorData.message);
-                        alert("Signup failed");
-                    });
+                    const errorData = await response.json();
+                    console.error("Signup failed with error:", errorData.message);
+                    alert("Signup failed");
                 }
             })
     }

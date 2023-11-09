@@ -8,7 +8,7 @@ import MessageBar from "./MessageBar.tsx";
 import Hidden from "@mui/material/Hidden";
 import {selectedChatInfo} from "../../atoms/selectedChatInfo.tsx";
 import { allChats } from "../../atoms/chats.tsx";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import { backendURL } from "../../info/backendURL.tsx";
 import axios from "axios";
 import SearchBar from "./SearchBar.tsx";
@@ -28,7 +28,10 @@ const ChatsPage = () => {
     const [selectedChat, setSelectedChat] = useRecoilState(selectedChatInfo);
     // @ts-ignore
     const [allMessages, setAllMessages] = useRecoilState(messages);
+    const [userInfoFetched, setUserInfoFetched] = useState(false);
+
     const socket = io("http://localhost:3000/");
+    var selectedChatCompare: any;
 
     const fetchUserInfo = async () => {
         try {
@@ -46,6 +49,7 @@ const ChatsPage = () => {
 
             const data = await response.json();
             setUserInfo(data);
+            setUserInfoFetched(true);
         } catch (error) {
             console.error("Error fetching user info:", error);
         }
@@ -97,18 +101,60 @@ const ChatsPage = () => {
         }
     }
 
+    const handleSendMessage = async (newMessage: string) => {
+        try {
+            const response = await fetch(`${backendURL}message/sendMessage`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({ content: newMessage, chatId: selectedChat?._id })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                socket.emit("newMessage", data);
+                setAllMessages([...allMessages, data]);
+            } else {
+                console.error("Failed to send message:", response.statusText);
+            }
+        } catch (error) {
+            console.error("An error occurred while sending the message:", error);
+        }
+    }
+
 
     useEffect(() => {
         fetchUserInfo();
         fetchChats();
-        socket.on("connect", () => {
-            console.log("log from client");
-        })
     }, []);
 
     useEffect(() => {
         fetchMessages();
+        if(selectedChat !== null){
+            socket.emit("join chat", selectedChat._id);
+        }
+        selectedChatCompare = selectedChat;
     }, [selectedChat]);
+
+    useEffect(() => {
+        if (userInfoFetched) {
+            socket.emit("setup", userInfo);
+        }
+    }, [userInfoFetched, userInfo]);
+
+    useEffect(() => {
+        socket.on("message Received", (newMessageReceived) => {
+            if(!selectedChat || selectedChatCompare?._id !== newMessageReceived.chat._id){
+
+            }
+            else{
+                setAllMessages(() => [...allMessages, newMessageReceived]);
+                console.log(allMessages);
+            }
+        })
+    });
 
     return (
         <>
@@ -157,7 +203,7 @@ const ChatsPage = () => {
                         >
                             {selectedChat && <MessageBar />}
                             {selectedChat && <Messages />}
-                            {selectedChat && <SendMessage/>}
+                            {selectedChat && <SendMessage handleSendMessage = {handleSendMessage}/>}
                         </Box>
                     </Hidden>
                 </div>

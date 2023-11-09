@@ -14,15 +14,18 @@ import {Email, Lock} from "@mui/icons-material";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {backendURL} from "../../info/backendURL.tsx";
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {themesState} from "../../atoms/themeState.tsx";
 import lightModeBg from "../../Assets/Images/lightModeLoginBg.jpg";
 import darkModeBg from "../../Assets/Images/darkModeLogin.jpg";
+import {loggedInUser} from "../../atoms/loggedInUser.tsx";
 
 const Login = () => {
     const theme = useTheme();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // @ts-ignore
+    const [userInfo, setUserInfo] = useRecoilState(loggedInUser);
     const navigate = useNavigate();
     const themeState = useRecoilValue(themesState);
 
@@ -37,17 +40,15 @@ const Login = () => {
             },
             body: JSON.stringify({ email: email, password: password }),
         })
-            .then((response) => {
+            .then(async (response) => {
                 if (response.ok) {
-                    return response.json().then((data) => {
-                        localStorage.setItem("token", data.token);
-                        navigate("/chats");
-                    });
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token);
+                    navigate("/chats");
                 } else {
-                    return response.json().then((errorData) => {
-                        console.error("Login failed with error:", errorData.message);
-                        alert("Login failed");
-                    });
+                    const errorData = await response.json();
+                    console.error("Login failed with error:", errorData.message);
+                    alert("Login failed");
                 }
             })
     }

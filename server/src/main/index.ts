@@ -55,4 +55,30 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log("Connected to socket.io");
+    socket.on('setup' , (userData) => {
+        socket.join(userData._id);
+        console.log(userData._id);
+        socket.emit("Connected");
+    })
+
+    socket.on("join chat", (room) => {
+        socket.join(room);
+        console.log("user joined room " + room);
+    })
+
+    socket.on("newMessage", (newMessageReceived) => {
+        const chat = newMessageReceived.chat;
+
+        if(!chat.users){
+            return console.log("chat.users not defined");
+        }
+
+        chat.users.forEach((u: any) => {
+            if(u._id === newMessageReceived.sender._id) {
+                return;
+            }
+
+            socket.to(u._id).emit("message Received", newMessageReceived);
+        })
+    })
 });

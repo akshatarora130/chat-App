@@ -3,15 +3,9 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import {useState} from "react";
-import {backendURL} from "../../info/backendURL.tsx";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {selectedChatInfo} from "../../atoms/selectedChatInfo.tsx";
-import {messages} from "../../atoms/messages.tsx";
 
-const SendMessage = () => {
+const SendMessage = (props: any) => {
     const theme = useTheme();
-    const selectedChat = useRecoilValue(selectedChatInfo);
-    const [allMessages, setAllMessages] = useRecoilState(messages)
     const [newMessage, setNewMessage] = useState("");
 
     const handleEmoji = () => {
@@ -22,28 +16,6 @@ const SendMessage = () => {
 
     }
 
-    const handleSendMessage = async () => {
-        try {
-            const response = await fetch(`${backendURL}message/sendMessage`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                },
-                body: JSON.stringify({ content: newMessage, chatId: selectedChat?._id })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setAllMessages([...allMessages, data]);
-                setNewMessage("");
-            } else {
-                console.error("Failed to send message:", response.statusText);
-            }
-        } catch (error) {
-            console.error("An error occurred while sending the message:", error);
-        }
-    }
 
     return(
         <>
@@ -84,7 +56,10 @@ const SendMessage = () => {
                         setNewMessage(e.target.value);
                     }}
                 />
-                <IconButton onClick={handleSendMessage}>
+                <IconButton onClick={() => {
+                    props.handleSendMessage(newMessage);
+                    setNewMessage("");
+                }} >
                     <SendIcon style={{
                         // @ts-ignore
                         color: theme.palette.customColors.sendIcon,
