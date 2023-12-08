@@ -29,7 +29,7 @@ router.post("/createGroup", authenticateJWT, async (req: Request, res: Response)
 
     try {
         const newGroupChat = new Chat({
-            name: parsedInput.data.name,
+            chatName: parsedInput.data.name,
             users: users,
             isGroupChat: true,
             groupAdmin: req.user,

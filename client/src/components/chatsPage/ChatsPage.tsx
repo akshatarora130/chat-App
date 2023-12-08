@@ -26,7 +26,9 @@ const ChatsPage = () => {
     const themeState = useRecoilValue(themesState);
     const [userInfo, setUserInfo] = useRecoilState(loggedInUser);
     const [chats, setChats] = useRecoilState(allChats);
+    // @ts-ignore
     const [selectedChat, setSelectedChat] = useRecoilState(selectedChatInfo);
+    // @ts-ignore
     const [allMessages, setAllMessages] = useRecoilState(messages);
     const [userInfoFetched, setUserInfoFetched] = useState(false);
 
@@ -99,7 +101,7 @@ const ChatsPage = () => {
         }
     };
 
-    const handleSendMessage = async (newMessage) => {
+    const handleSendMessage = async (newMessage: string) => {
         try {
             const response = await fetch(`${backendURL}message/sendMessage`, {
                 method: "POST",
@@ -192,6 +194,7 @@ const ChatsPage = () => {
                         <Box
                             sx={{
                                 flex: 3,
+                                //@ts-ignore
                                 backgroundColor: theme.palette.customColors.messageBoxBackground,
                                 backgroundImage: `url(${themeState === "light" ? lightModeMessageBg : darkModeMessageBg})`,
                                 backgroundSize: "cover",
