@@ -119,7 +119,7 @@ const MessageBar = () => {
                 <Paper>
                     <List>
                         <ListItem button sx={{ width: "150px" }} onClick={handleProfileBoxOpen}>
-                            <ListItemText primary="UserInfo" />
+                            <ListItemText primary="Chat Info" />
                         </ListItem>
                         <ListItem button onClick={handleClearChat}>
                             <ListItemText primary="Clear chat" />

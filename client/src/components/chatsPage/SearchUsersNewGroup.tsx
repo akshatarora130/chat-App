@@ -10,6 +10,7 @@ const SearchUserNewGroup = (props: any) => {
 
     const handleAddUser = () => {
         if(!selectedUser?.includes(user)){
+            // @ts-ignore
             setSelectedUser([...selectedUser, user])
         }
         else{

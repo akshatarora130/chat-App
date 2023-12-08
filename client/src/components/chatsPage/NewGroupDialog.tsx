@@ -12,8 +12,6 @@ import {allChats} from "../../atoms/chats.tsx";
 import {backendURL} from "../../info/backendURL.tsx";
 import SelectedUserNewGroup from "./SelectedUserNewGroup.tsx";
 import SearchUserNewGroup from "./SearchUsersNewGroup.tsx";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 interface NewChatDialogProps {
     open: boolean;

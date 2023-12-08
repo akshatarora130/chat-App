@@ -16,6 +16,13 @@ const SendMessage = (props: any) => {
 
     }
 
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            props.handleSendMessage(newMessage);
+            setNewMessage("");
+        }
+    }
 
     return(
         <>
@@ -55,6 +62,7 @@ const SendMessage = (props: any) => {
                     onChange={(e) => {
                         setNewMessage(e.target.value);
                     }}
+                    onKeyDown={handleKeyPress}
                 />
                 <IconButton onClick={() => {
                     props.handleSendMessage(newMessage);

@@ -9,6 +9,7 @@ const SelectedUserNewGroup = (props: any) => {
     const [selectedUser, setSelectedUser] = useRecoilState(selectedUsersNewGroup);
 
     const handleRemove = () => {
+        // @ts-ignore
         setSelectedUser(selectedUser.filter(selected => selected !== user));
     }
 
