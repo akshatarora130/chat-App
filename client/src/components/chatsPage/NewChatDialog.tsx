@@ -18,7 +18,6 @@ interface NewChatDialogProps {
 
 const NewChatDialog: React.FC<NewChatDialogProps> = ({ open, onClose }) => {
     const [searchedUsers, setSearchedUsers] = useState([]);
-    // @ts-ignore
     const [selectedUser, setSelectedUser] = useRecoilState(selectedUserNewChat);
     const [chats, setChats] = useRecoilState(allChats);
 
@@ -71,12 +70,18 @@ const NewChatDialog: React.FC<NewChatDialogProps> = ({ open, onClose }) => {
         onClose();
     }
 
+    const handleClose = () => {
+        setSearchedUsers([]);
+        setSelectedUser(null);
+        onClose();
+    }
+
 
     return (
         <>
             <div >
-                <Dialog open={open} onClose={onClose} >
-                    <DialogTitle sx={{width: "1000px"}}>NEW CHAT</DialogTitle>
+                <Dialog open={open} onClose={handleClose} >
+                    <DialogTitle sx={{width: "500px"}}>NEW CHAT</DialogTitle>
                     <DialogContent>
                         <TextField
                             variant="outlined"
@@ -109,7 +114,7 @@ const NewChatDialog: React.FC<NewChatDialogProps> = ({ open, onClose }) => {
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" onClick={createChat} sx={{marginBottom: "20px", marginRight: "5px"}}>Create Chat</Button>
-                        <Button variant= "contained" onClick={onClose} sx={{marginBottom: "20px"}}>Close</Button>
+                        <Button variant= "contained" onClick={handleClose} sx={{marginBottom: "20px"}}>Close</Button>
                     </DialogActions>
                 </Dialog>
             </div>
