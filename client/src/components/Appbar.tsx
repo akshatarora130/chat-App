@@ -9,6 +9,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useRecoilState } from 'recoil';
 import { themesState } from "../atoms/themeState.tsx";
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 function Appbar() {
     const theme = useTheme()
@@ -18,6 +19,9 @@ function Appbar() {
         setThemeState(themeState === 'light' ? 'dark' : 'light');
     };
 
+    const handleGithub = () => {
+        window.location.href = "https://github.com/akshatarora130/chat-App";
+    }
 
     return (
         <>
@@ -29,6 +33,9 @@ function Appbar() {
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
                         TALK-TALK
                     </Typography>
+                    <IconButton onClick={handleGithub}>
+                        <GitHubIcon/>
+                    </IconButton>
                     <IconButton onClick={toggleTheme} sx={{
 
                     }}>
