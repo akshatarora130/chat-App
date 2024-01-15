@@ -18,7 +18,7 @@ import loggedInUserInfo from "../routes/user/loggedInUserInfo";
 import { Server } from "socket.io";
 
 mongoose.connect(mongooseUrl, { dbName: "chatApp" }).then(() => {
-    console.log("mondoDB connected");
+  console.log("mondoDB connected");
 });
 
 const app = express();
@@ -41,39 +41,39 @@ app.use("/message", sendMessage);
 app.use("/message", fetchMessages);
 
 const server = app.listen(port, () => {
-    console.log(`app running on port number ${port}`);
+  console.log(`server started on port number  ${port}`);
 });
 
 const io = new Server(server, {
-    pingTimeout: 60000,
-    cors: {
-        origin: "http://localhost:5173",
-    },
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:5173",
+  },
 });
 
 io.on('connection', (socket) => {
-    socket.on('setup', (userData) => {
-        socket.join(userData._id);
-        console.log(userData._id);
-        socket.emit("Connected");
-    });
+  socket.on('setup', (userData) => {
+    socket.join(userData._id);
+    console.log(userData._id);
+    socket.emit("Connected");
+  });
 
-    socket.on("join chat", (room) => {
-        socket.join(room);
-        console.log("user joined room " + room);
-    });
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("user joined room " + room);
+  });
 
-    socket.on("newMessage", (newMessageReceived) => {
-        const chat = newMessageReceived.chat;
+  socket.on("newMessage", (newMessageReceived) => {
+    const chat = newMessageReceived.chat;
 
-        if (!chat.users) {
-            return console.log("chat.users not defined");
-        }
+    if (!chat.users) {
+      return console.log("chat.users not defined");
+    }
 
-        io.to(chat._id).emit("messageReceived", newMessageReceived);
-    });
+    io.to(chat._id).emit("messageReceived", newMessageReceived);
+  });
 
-    socket.on('disconnect', () => {
-        // Handle socket disconnect, remove from rooms, etc.
-    });
+  socket.on('disconnect', () => {
+    // Handle socket disconnect, remove from rooms, etc.
+  });
 });

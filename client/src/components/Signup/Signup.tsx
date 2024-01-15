@@ -78,7 +78,8 @@ const Signup = () => {
                     borderRadius: "30px",
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    marginTop: "50px"
                 }}>
                     <Typography variant="h5" sx={{
                         marginTop: "15px",

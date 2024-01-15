@@ -27,6 +27,10 @@ interface CustomPalette extends PaletteOptions {
         receiverMessage: string;
         messageText: string;
         selectedUserBg: string;
+        mainPageBg: string;
+        buttonColor: string;
+        buttonBg: string;
+        textHome: string;
     }
 }
 
@@ -61,6 +65,10 @@ const lightPalette: CustomPalette = {
         receiverMessage: "#ffffff",
         messageText: "#000000",
         selectedUserBg: "#d9fdd2",
+        mainPageBg: "#f0ebe3",
+        buttonColor: "#000000",
+        buttonBg: "#ffffff",
+        textHome: "#000000"
     }
 };
 
@@ -94,7 +102,11 @@ const darkPalette: CustomPalette = {
         senderMessage: "#015d4b",
         receiverMessage: "#1f2c33",
         messageText: "#ffffff",
-        selectedUserBg: "#015d4b"
+        selectedUserBg: "#015d4b",
+        mainPageBg: "#1f2c33",
+        buttonColor: "#000000",
+        buttonBg: "#ffffff",
+        textHome: "#ffffff"
     }
 };
 

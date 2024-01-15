@@ -62,7 +62,7 @@ const ChatsBar = () => {
     const handleLogout = () => {
         localStorage.clear();
         handleMenuClose();
-        navigate("/login")
+        navigate("/")
     };
 
     return (
